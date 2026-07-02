@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Password Strength Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>
+        <i class="fa-solid fa-lock"></i>
+        Password Strength Analyzer
+    </h1>
+
+    <form method="POST">
+
+        <div class="password-box">
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required>
+
+            <span id="togglePassword">
+                <i class="fa-solid fa-eye"></i>
+            </span>
+
+        </div>
+
+        <!-- Strength Meter -->
+
+        <div class="meter">
+
+            <div id="strength-bar"></div>
+
+        </div>
+
+        <h3 id="strength-text">
+            Password Strength
+        </h3>
+
+        <button type="submit">
+            Analyze Password
+        </button>
+
+    </form>
+
+    <!-- Checklist -->
+
+    <div class="checklist">
+
+        <h2>Password Requirements</h2>
+
+        <p id="length">
+            ❌ Minimum 8 Characters
+        </p>
+
+        <p id="uppercase">
+            ❌ Uppercase Letter
+        </p>
+
+        <p id="lowercase">
+            ❌ Lowercase Letter
+        </p>
+
+        <p id="number">
+            ❌ Number
+        </p>
+
+        <p id="special">
+            ❌ Special Character
+        </p>
+
+    </div>
+
+    <!-- Flask Output -->
+
+    {% if strength %}
+
+    <div class="result">
+
+        <h2>
+            Strength :
+            <span>{{ strength }}</span>
+        </h2>
+
+        <h3>Password Score</h3>
+
+        <div class="score-box">
+
+            {{ score }} %
+
+        </div>
+
+        <h3>Suggestions</h3>
+
+        <ul>
+
+            {% for item in suggestions %}
+
+            <li>{{ item }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+        <h3>Suggested Strong Password</h3>
+
+        <div class="generated-password">
+
+            <input
+                type="text"
+                id="generatedPassword"
+                value="{{ new_password }}"
+                readonly>
+
+            <button
+                type="button"
+                id="copyBtn">
+
+                <i class="fa-solid fa-copy"></i>
+
+                Copy
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
